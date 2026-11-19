@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: kinbo-ai
+    runtime: static
+    buildCommand: echo "Kinbo frontend is ready"
+    staticPublishPath: ./app/frontend

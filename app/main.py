@@ -7,6 +7,9 @@ from app.api.v1.router import api_router
 from app.core.exceptions.handlers import register_exception_handlers
 from app.mcp.server import mcp_asgi_app, session_manager
 
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -19,3 +22,9 @@ register_exception_handlers(app)
 app.include_router(health_router)
 app.include_router(api_router)
 app.add_route("/mcp", mcp_asgi_app)
+
+app.mount(
+    "/studio",
+    StaticFiles(directory=Path(__file__).resolve().parent / "frontend", html=True),
+    name="studio",
+)
