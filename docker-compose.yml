@@ -1,0 +1,54 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: sales_agent_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sales_agent
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sales_agent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: sales_agent_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/sales_agent
+      DB_HOST: db
+      DB_PORT: 5432
+      EMBEDDINGS_URL: "http://embedder:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app:/app/app
+    command: >
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  embedder:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.9.4
+    container_name: sales-agent-embedder
+    restart: unless-stopped
+    command: --model-id unsloth/embeddinggemma-300m
+    ports:
+      - "8090:80"
+    volumes:
+      - sales-agent-hf-cache:/data
+
+volumes:
+  pgdata:
+  sales-agent-hf-cache:
