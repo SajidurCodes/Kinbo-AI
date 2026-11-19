@@ -2,7 +2,7 @@
 
 A gadget-shopping assistant for Bangladesh. Kinbo answers product questions with live catalog queries and retrieves store policies before answering delivery or warranty questions. Its web interface includes a searchable-by-category catalog, expandable product details, conversation history, visible tool calls, and light and dark themes.
 
-[Try the Kinbo guided demo](http://127.0.0.1:8000/studio/) — browse 16 gadgets and explore sample questions about price, stock, warranty, and delivery.
+[Try the Kinbo guided demo](https://kinbo-ai.onrender.com/) — browse 16 gadgets and explore sample questions about price, stock, warranty, and delivery.
 
 ## Try Kinbo
 
