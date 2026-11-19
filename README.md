@@ -67,10 +67,4 @@ Use Windows CMD, Docker Desktop with Linux containers, Python 3.12, and uv. Run 
 
 4. Open the gadget desk and try the two questions above. Check the backend with `curl.exe http://localhost:8000/health/db`. To inspect MCP, run `uv run python -m scripts.mcp_check http://localhost:8000/mcp`.
 
-## Deploy the guided demo on Render
 
-The included `render.yaml` publishes `app/frontend` as a static site. In Render, select **New → Blueprint**, connect this repository, review the static site, and deploy. Open its assigned URL at the site root. The guided demo requires no API keys or database. Add that URL to the GitHub repository's **About → Website** field and to this README after deployment.
-
-## Credits
-
-Built by Sajidur Rahman Siam as a portfolio implementation of Phitron's AI/ML live-project module. The instructor repository supplies the backend architecture, course code, seed catalog, and policy text. The portfolio addition is the browser interface with guided and live modes, theme switching, and static deployment configuration. [Original class repository](https://github.com/phitronio/Project_Track_Live_Project_AI_ML_Batch-1/tree/class-15)
